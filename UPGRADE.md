@@ -1,5 +1,25 @@
 # Upgrade
 
+## 2.5.x
+
+### Deprecate SendinBlue's API v3 Php Library
+
+The Sendinblue Form Field is now deprecated; please use the Brevo Form Field instead.
+Both fields offer the same functionality but rely on different SDKs.
+Therefore, replace `sendinblue/api-v3-sdk` with `getbrevo/brevo-php` in your dependencies.
+Additionally, update the configuration variable from `sendinblue_api_key` to `brevo_api_key`
+in `config/packages/sulu_form.yaml`.
+
+You can find all Brevo configuration options [here](Resources/doc/brevo.md).
+
+#### Data Migration
+
+Use the following database query to update all existing forms.
+
+```sql
+UPDATE `fo_form_fields` SET `type` = 'brevo' WHERE `type` = 'sendinblue';
+```
+
 ## 2.5.3
 
 ### Deprecate attribute max on AttachmentType
